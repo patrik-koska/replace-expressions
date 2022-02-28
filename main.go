@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"log"
 	"os"
@@ -57,9 +58,14 @@ func main() {
 	if err != nil {
 		log.Printf("Could not open original json file\n%v", err)
 	}
+	err, jsonFromYaml := GetJsonFromYaml(original)
+	if err != nil {
+		log.Printf("Could not get json from original yaml\n%v", err)
+	}
+
 	var originalJsoncontent map[string]interface{}
 
-	err = json.Unmarshal(original, &originalJsoncontent)
+	err = json.Unmarshal(jsonFromYaml, &originalJsoncontent)
 	if err != nil {
 		log.Printf("Could not unmarshal to interface|\n%v", err)
 	}
@@ -98,4 +104,14 @@ func PrintHelp() {
 	fmt.Println("You have to specify -e for exported json")
 	fmt.Println("You have to specify -o for output json")
 	fmt.Println(os.Args[0], "-e <exported-json-path> -o <original-json-path>")
+}
+
+func GetJsonFromYaml(data []byte) (error, []byte) {
+	originalYamlContent := make(map[interface{}]interface{})
+	err := yaml.Unmarshal(data, &originalYamlContent)
+	if err != nil {
+		return err, nil
+	}
+	spec := originalYamlContent["spec"].(map[interface{}]interface{})
+	return nil, []byte(spec["json"].(string))
 }
