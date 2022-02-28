@@ -103,7 +103,7 @@ func returnExpressions(expressionList []string) <-chan string {
 func PrintHelp() {
 	fmt.Println("You have to specify -e for exported json")
 	fmt.Println("You have to specify -o for output json")
-	fmt.Println(os.Args[0], "-e <exported-json-path> -o <original-json-path>")
+	fmt.Println(os.Args[0], "-e <exported-json-path> -o <original-yaml-containing-json-path>")
 }
 
 func GetJsonFromYaml(data []byte) (error, []byte) {
