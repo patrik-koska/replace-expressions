@@ -9,25 +9,25 @@ import (
 	"os"
 )
 
-var exported_json_path string
-var original_json_path string
+var exportedJsonPath string
+var originalJsonPath string
 
 func init() {
-	flag.StringVar(&exported_json_path, "e", "", "Specify the exported jsonfile")
-	flag.StringVar(&original_json_path, "o", "", "Specify the original jsonfile")
+	flag.StringVar(&exportedJsonPath, "e", "", "Specify the exported jsonfile")
+	flag.StringVar(&originalJsonPath, "o", "", "Specify the original jsonfile")
 }
 
 func main() {
 	flag.Parse()
 
-	if exported_json_path == "" || original_json_path == "" {
+	if exportedJsonPath == "" || originalJsonPath == "" {
 		PrintHelp()
 		os.Exit(1)
 	}
 
 	var exportedExpressions []string
 
-	exported, err := ioutil.ReadFile(exported_json_path)
+	exported, err := ioutil.ReadFile(exportedJsonPath)
 	if err != nil {
 		log.Printf("Could not open exported json file \n%v", err)
 	}
@@ -53,7 +53,7 @@ func main() {
 		}
 	}
 
-	original, err := ioutil.ReadFile(original_json_path)
+	original, err := ioutil.ReadFile(originalJsonPath)
 	if err != nil {
 		log.Printf("Could not open original json file\n%v", err)
 	}
