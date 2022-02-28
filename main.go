@@ -78,7 +78,7 @@ func main() {
 			}
 		}
 	}
-	marshalled, err := json.Marshal(originalJsoncontent)
+	marshalled, err := json.MarshalIndent(originalJsoncontent, "", "    ")
 	if err != nil {
 		log.Printf("Could not marshal exportedJsoncontent\n%v", err)
 	}
