@@ -63,14 +63,14 @@ func main() {
 		log.Printf("Could not get json from original yaml\n%v", err)
 	}
 
-	var originalJsoncontent map[string]interface{}
+	var originalJsonContent map[string]interface{}
 
-	err = json.Unmarshal(jsonFromYaml, &originalJsoncontent)
+	err = json.Unmarshal(jsonFromYaml, &originalJsonContent)
 	if err != nil {
 		log.Printf("Could not unmarshal to interface|\n%v", err)
 	}
 
-	for _, panel := range originalJsoncontent["panels"].([]interface{}) {
+	for _, panel := range originalJsonContent["panels"].([]interface{}) {
 		resultMap := panel.(map[string]interface{})
 		for k, _ := range resultMap {
 			if k == "targets" {
@@ -84,7 +84,7 @@ func main() {
 			}
 		}
 	}
-	marshalled, err := json.MarshalIndent(originalJsoncontent, "", "    ")
+	marshalled, err := json.MarshalIndent(originalJsonContent, "", "    ")
 	if err != nil {
 		log.Printf("Could not marshal exportedJsoncontent\n%v", err)
 	}
@@ -92,9 +92,9 @@ func main() {
 
 }
 
-func returnExpressions(expressionlist []string) <-chan string {
+func returnExpressions(expressionList []string) <-chan string {
 	ch := make(chan string)
-	for _, expression := range expressionlist {
+	for _, expression := range expressionList {
 		ch <- expression
 	}
 	return ch
